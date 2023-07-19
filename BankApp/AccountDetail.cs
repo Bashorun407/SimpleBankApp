@@ -25,8 +25,8 @@ namespace BankApp
         {
 
             FirstName = firstname;
-
             LastName = lastName;
+
 
             //to validate email format
             if (isValidEmail(email) == true)
@@ -43,12 +43,39 @@ namespace BankApp
             //AccountNumber should be internally generated
             AccountNumber = GenerateAccountNumber();
 
-            AccountType = accountType;
+            AccountType = AccountTypeChecker(accountType);
 
             //accountBalance should be a default value
             AccountBalance = 0.0m;
         }
 
+
+        //Using Checkers to check that Duplicate accounts with the same account-type does not exist
+        public static void CheckIfAccountExist(AccountDetail newAccount, List<AccountDetail> accounts)
+        {
+            bool find = false;
+            foreach (AccountDetail account in accounts)
+            {
+                //if account type exists, break
+                if(account.FirstName.Equals(newAccount.FirstName, StringComparison.InvariantCultureIgnoreCase) 
+                    && account.LastName.Equals(newAccount.LastName, StringComparison.InvariantCultureIgnoreCase) 
+                    && account.AccountType.Equals(newAccount.AccountType, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    find = true;
+                    break;
+                }
+            }
+
+            if (find == true)
+            {
+                Console.WriteLine($"Account already exists. You can register another account different from {newAccount.AccountType}");
+            }
+
+            else
+            {
+                accounts.Add(newAccount);
+            }
+        }
 
         //account generator
         public string GenerateAccountNumber()
@@ -86,7 +113,7 @@ namespace BankApp
                 {
                     accountDetail.AccountBalance += balance;
                     Console.WriteLine($"New Account Balance for {accountDetail.LastName}, {accountDetail.FirstName} [{accountDetail.AccountNumber}] " +
-                        $"is: {accountDetail.AccountBalance}");
+                        $"is: N{accountDetail.AccountBalance}");
 
                 }
 
@@ -99,7 +126,7 @@ namespace BankApp
         }
 
         //Method to Withdraw
-        public void Withdraw(string accountNumber, decimal balance, List<AccountDetail> accounts)
+        public void Withdraw(string accountNumber, decimal withdrawAmount, List<AccountDetail> accounts)
         {
             //Search for user's account detail in the List
             foreach (AccountDetail accountDetail in accounts)
@@ -108,19 +135,41 @@ namespace BankApp
                 if (accountDetail.AccountNumber.Equals(accountNumber))
                 {
 
-                    //Check if Account
-                    accountDetail.AccountBalance = balance;
-                    Console.WriteLine($"New Account Balance for {accountDetail.LastName}, {accountDetail.FirstName} [{accountDetail.AccountNumber}] " +
-                        $"is: {accountDetail.AccountBalance}");
+                    //Check if Accountbalance is greater than withdrawAccount and balace left will be at least 500
+                    if(AccountBalance - withdrawAmount > 1000)
+                    {
+                        accountDetail.AccountBalance -= withdrawAmount;
+                        Console.WriteLine($"New Account Balance for {accountDetail.LastName}, {accountDetail.FirstName} [{accountDetail.AccountNumber}] " +
+                                $"is: N{accountDetail.AccountBalance: 2F}");
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("Insufficient Balance. \nLeast balance must be 500. \nReduce withdraw amount");
+                    }
 
                 }
+
+                //if account does not exist in the in-memory
+                else
+                {
+                    Console.WriteLine($"Account with Account-Number: {accountDetail.AccountNumber} does not exist.");
+                }
+
             }
         }
 
         //Method to transfer
-        public void Transfer(string fromAccount, string toAccount, decimal balance)
+        public void Transfer(string fromAccount, string toAccount, decimal amount, string comment, List<AccountDetail> accounts)
         {
 
+            //Withdraw amount from Sender's account
+            Withdraw(fromAccount, amount, accounts);
+
+            //Send amount to Receiver's account
+            Deposit(toAccount, amount, accounts);
+
+            Console.WriteLine(comment);
         }
 
         //generate random
