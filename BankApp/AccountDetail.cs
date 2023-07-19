@@ -84,18 +84,37 @@ namespace BankApp
                 //if account exists in the in-memory database, add balance
                 if (accountDetail.AccountNumber.Equals(accountNumber))
                 {
+                    accountDetail.AccountBalance += balance;
+                    Console.WriteLine($"New Account Balance for {accountDetail.LastName}, {accountDetail.FirstName} [{accountDetail.AccountNumber}] " +
+                        $"is: {accountDetail.AccountBalance}");
+
+                }
+
+                //If account does not exist in the in-memory database, send an error message
+                else
+                {
+                    Console.WriteLine("Account detail does not exist");
+                }
+            }
+        }
+
+        //Method to Withdraw
+        public void Withdraw(string accountNumber, decimal balance, List<AccountDetail> accounts)
+        {
+            //Search for user's account detail in the List
+            foreach (AccountDetail accountDetail in accounts)
+            {
+                //if account exists in the in-memory database, add balance
+                if (accountDetail.AccountNumber.Equals(accountNumber))
+                {
+
+                    //Check if Account
                     accountDetail.AccountBalance = balance;
                     Console.WriteLine($"New Account Balance for {accountDetail.LastName}, {accountDetail.FirstName} [{accountDetail.AccountNumber}] " +
                         $"is: {accountDetail.AccountBalance}");
 
                 }
             }
-        }
-
-        //Method to Withdraw
-        public void Withdraw(string accountNumber, decimal balance)
-        {
-
         }
 
         //Method to transfer
