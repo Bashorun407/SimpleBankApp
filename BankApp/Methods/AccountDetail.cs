@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace BankApp
+namespace BankApp.Methods
 {
 
     public class AccountDetail
@@ -17,7 +17,7 @@ namespace BankApp
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
         public string? AccountNumber { get; set; }
-        public string? AccountType { get; set;}
+        public string? AccountType { get; set; }
         public decimal AccountBalance { get; set; }
 
         //Class constructor

@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace BankApp
+namespace BankApp.Methods
 {
     public class AccountCheckMethods
     {
@@ -77,9 +77,9 @@ namespace BankApp
             // a string or to ensure that a string
             // conforms to a particular pattern.
             if (re.IsMatch(inputMobileNumber))
-                return (true);
+                return true;
             else
-                return (false);
+                return false;
         }
 
 

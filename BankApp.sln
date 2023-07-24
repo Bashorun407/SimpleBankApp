@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankApp", "BankApp\BankApp.csproj", "{5BED133F-EEB0-4B33-B119-4CF4B44F1142}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankApp", "BankApp\BankApp.csproj", "{5BED133F-EEB0-4B33-B119-4CF4B44F1142}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logic", "Logic", "{C5E494D4-8BB1-434B-9AFC-0336502D9FAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildBasicBank", "BuildBasicBank\BuildBasicBank.csproj", "{80581444-BB27-4C9E-BF99-841F6FA8294D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{5BED133F-EEB0-4B33-B119-4CF4B44F1142}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BED133F-EEB0-4B33-B119-4CF4B44F1142}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BED133F-EEB0-4B33-B119-4CF4B44F1142}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80581444-BB27-4C9E-BF99-841F6FA8294D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80581444-BB27-4C9E-BF99-841F6FA8294D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80581444-BB27-4C9E-BF99-841F6FA8294D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80581444-BB27-4C9E-BF99-841F6FA8294D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5BED133F-EEB0-4B33-B119-4CF4B44F1142} = {C5E494D4-8BB1-434B-9AFC-0336502D9FAD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1682CA08-9514-4921-952C-B11490B58741}
