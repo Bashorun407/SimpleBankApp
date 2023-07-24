@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BankApp.models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,14 +11,15 @@ namespace BankApp.Methods
     public class AccountCheckMethods
     {
         //1) Method to check that Duplicate accounts with the same account-type does not exist
-        public static void CheckIfAccountExist(AccountDetail newAccount, List<AccountDetail> accounts)
+        public static void CheckIfAccountExist(Account newAccount, List<Account> accounts)
         {
             bool find = false;
-            foreach (AccountDetail account in accounts)
+            foreach (Account account in accounts)
             {
                 //if account type exists, break
                 if (account.FirstName.Equals(newAccount.FirstName, StringComparison.InvariantCultureIgnoreCase)
                     && account.LastName.Equals(newAccount.LastName, StringComparison.InvariantCultureIgnoreCase)
+                    && account.OtherName.Equals(newAccount.AccountNumber, StringComparison.InvariantCultureIgnoreCase)
                     && account.AccountType.Equals(newAccount.AccountType, StringComparison.InvariantCultureIgnoreCase))
                 {
                     find = true;
@@ -48,6 +50,34 @@ namespace BankApp.Methods
                 acctNum += rand.NextInt64();
             }
 
+            return acctNum;
+        }
+
+        //2b) Method to generate account number
+        public static string GenerateUniqueId()
+        {
+            string acctNum = string.Empty;
+            Random rand = new Random();
+
+            for (int i = 0; i < 6; i++)
+            {
+                acctNum += rand.NextInt64();
+            }
+
+            return acctNum;
+        }
+
+        //2) Method to generate account number
+        public static string GenerateTransactionId(string name)
+        {
+            string acctNum = string.Empty;
+            Random rand = new Random();
+
+            for (int i = 0; i < 6; i++)
+            {
+                acctNum += rand.NextInt64();
+            }
+            acctNum = name + "-" + acctNum;
             return acctNum;
         }
 

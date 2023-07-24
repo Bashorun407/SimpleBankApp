@@ -1,11 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using BankApp.Methods;
+using BankApp.models;
 
-Console.WriteLine("Hello, World!");
+Console.WriteLine("Welcome to Akinnova Bank App");
 
 //In-house memory
-List<AccountDetail> accountList = new List<AccountDetail> { };
+List<Account> accountList = new List<Account> { };
+List<Customer> customerList = new List<Customer> { };
+List<Transaction> transactionList = new List<Transaction> { };
 
+
+
+
+/*
 string newName = string.Empty;
 
 //Get User input
@@ -27,3 +34,6 @@ using (StreamWriter sw = new StreamWriter(filePath, true))
 }
 
 Console.WriteLine($"{newName} has been added to the file");
+*/
+
+Console.ReadKey();
