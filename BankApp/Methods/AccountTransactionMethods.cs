@@ -169,10 +169,13 @@ namespace BankApp.Methods
                 {
                     return;
                 }
+                else
+                {
+                    //If account does not exist in the in-memory database, send an error message
+                    //Console.WriteLine($"Account detail with Account number: {accountNumber} does not exist");
+                }
             }
 
-            //If account does not exist in the in-memory database, send an error message
-            Console.WriteLine($"Account detail with Account number: {accountNumber} does not exist");
         }
 
 
@@ -199,7 +202,7 @@ namespace BankApp.Methods
                         {
                             accountDetail.AccountBalance -= withdrawAmount;
                             Console.WriteLine($"New Account Balance for {accountDetail.LastName}, {accountDetail.FirstName} [{accountDetail.AccountNumber}] " +
-                                    $"is: N{accountDetail.AccountBalance: 2F}");
+                                    $"is: N{accountDetail.AccountBalance}");
 
                             //Then save the Transaction in the transaction database
                             Transaction transaction = new Transaction("Withdraw", withdrawAmount, accountNumber, description);
@@ -230,11 +233,12 @@ namespace BankApp.Methods
                 {
                     return;
                 }
+                else
+                {
+                    //if account does not exist in the in-memory
+                    //Console.WriteLine($"Account with Account-Number: {accountNumber} does not exist.");
+                }
             }
-
-            //if account does not exist in the in-memory
-
-            Console.WriteLine($"Account with Account-Number: {accountNumber} does not exist.");
         }
 
 
@@ -284,8 +288,12 @@ namespace BankApp.Methods
                 }
                 if (checker == true)
                     return;
+                else
+                {
+                    Console.WriteLine($"Account Number: {accountNumber} does not exist. ");
+                }
             }
-            Console.WriteLine($"Account Number: {accountNumber} does not exist. ");
+
         }
     }
 }

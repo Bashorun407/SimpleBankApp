@@ -60,14 +60,14 @@ while (whileChecker)
             case 2:
                 Console.WriteLine("Deposit Transaction");
                 Console.WriteLine("Enter your accountNumber: ");
-                input = Console.ReadLine();
+                string acctNum = Console.ReadLine();
 
                 Console.WriteLine("Enter amount to deposit: ");
                 input = Console.ReadLine();
                 bool inputChecker  = Decimal.TryParse(input, out decimal deciResult);
                 if (inputChecker == true) 
                 {
-                    AccountTransactionMethods.Deposit(input, deciResult, "A deposit transaction", accountList, transactionList);
+                    AccountTransactionMethods.Deposit(acctNum, deciResult, "A deposit transaction", accountList, transactionList);
                 }
                 else
                 {
@@ -80,14 +80,14 @@ while (whileChecker)
             case 3:
                 Console.WriteLine("Withdraw Transaction");
                 Console.WriteLine("Enter your accountNumber: ");
-                input = Console.ReadLine();
+                string acct1 = Console.ReadLine();
 
-                Console.WriteLine("Enter amount to deposit: ");
+                Console.WriteLine("Enter amount to withdraw: ");
                 input = Console.ReadLine();
                 bool inputChecker2 = Decimal.TryParse(input, out decimal withResult);
                 if (inputChecker2 == true)
                 {
-                    AccountTransactionMethods.Withdraw(input, withResult, "A withdraw transaction", accountList, transactionList);
+                    AccountTransactionMethods.Withdraw(acct1, withResult, "A withdraw transaction", accountList, transactionList);
                 }
                 else
                 {
@@ -124,9 +124,8 @@ while (whileChecker)
             //To Check Account Balance
             case 5:
                 Console.WriteLine("Balance Enquiry");
-                Console.WriteLine("Transfer Transaction");
                 //Prompting user for sender account
-                Console.WriteLine("Enter sender account number: ");
+                Console.WriteLine("Enter your account number: ");
                 string accountNumber = Console.ReadLine();
                 AccountTransactionMethods.CurrentBalance(accountNumber, accountList);
                 break;
@@ -135,7 +134,7 @@ while (whileChecker)
     }
 
     //Prompt the User if they want to continue
-    Console.WriteLine("To QUIT press 'NO' ");
+    Console.WriteLine("\nTo QUIT press 'NO' ");
     string stopOperation = Console.ReadLine();
     //check whileChecker
     if (stopOperation == "NO")
