@@ -11,7 +11,7 @@ namespace BankApp.Methods
     public class AccountCheckMethods
     {
         //1) Method to check that Duplicate accounts with the same account-type does not exist
-        public static void CheckIfAccountExist(Account newAccount, List<Account> accounts)
+        public static bool CheckIfAccountExist(Account newAccount, List<Account> accounts)
         {
             bool find = false;
             foreach (Account account in accounts)
@@ -30,12 +30,11 @@ namespace BankApp.Methods
             if (find == true)
             {
                 Console.WriteLine($"Account already exists. You can register another account different from {newAccount.AccountType}");
+                return false;
             }
 
-            else
-            {
-                accounts.Add(newAccount);
-            }
+            accounts.Add(newAccount);
+            return true;
         }
 
 
@@ -45,7 +44,7 @@ namespace BankApp.Methods
             string acctNum = string.Empty;
             Random rand = new Random();
 
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 1; i++)
             {
                 acctNum += rand.NextInt64();
             }
@@ -59,7 +58,7 @@ namespace BankApp.Methods
             string acctNum = string.Empty;
             Random rand = new Random();
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 1; i++)
             {
                 acctNum += rand.NextInt64();
             }
@@ -73,7 +72,7 @@ namespace BankApp.Methods
             string acctNum = string.Empty;
             Random rand = new Random();
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 1; i++)
             {
                 acctNum += rand.NextInt64();
             }
@@ -99,7 +98,7 @@ namespace BankApp.Methods
         public static bool isValidMobileNumber(string inputMobileNumber)
         {
             //This format ensures that phone number begins with 234 which is Nigerian code
-            string strRegex = @"(^+[2-4]{3}-[1-9]{2} -[0-9]{4}-[0-9]{4}$)";
+            string strRegex = @"(^+[2-4]{3}-[1-9]{2}-[0-9]{4}-[0-9]{4}$)";
 
             Regex re = new Regex(strRegex);
 
@@ -116,7 +115,9 @@ namespace BankApp.Methods
         //5) Method-Email format checker using regex
         public static bool isValidEmail(string inputEmail)
         {
-            return Regex.IsMatch(inputEmail, @"^[a-z0-9\.-_]+@[a-z0-9\.a-z]$");
+            //return Regex.IsMatch(inputEmail, @"^[a-z0-9\.-_]+@[a-z0-9\.a-z]$");
+            
+            return Regex.IsMatch(inputEmail, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z");
         }
 
         //6) Method-Name format checker using regex

@@ -8,9 +8,142 @@ Console.WriteLine("Welcome to Akinnova Bank App");
 List<Account> accountList = new List<Account> { };
 List<Customer> customerList = new List<Customer> { };
 List<Transaction> transactionList = new List<Transaction> { };
+string? input = string.Empty;
+bool whileChecker = true;
+
+//Using Switch to give users options
+while (whileChecker)
+{
+    //Print options to console
+    Console.WriteLine("\n####********** Welcome Customer ***********####\n\n To Register press: 1 \n To Deposit press: 2 \n To Withdraw press: 3 \n To Transfer press: 4" +
+        "\n To Check Balance press: 5 \n To Quit Press: 0");
+    //Accept user input
+    input = Console.ReadLine();
+
+    bool check = byte.TryParse(input, out byte result);
+
+    //To check input by user
+    //To check if user inputs string
+
+    if (check == false)
+    {
+        Console.WriteLine("Your input is invalid!!");
+        //break;
+    }
 
 
+    //To check that the user inputs digit between 1 and 7
+    else if (result < 0 || result > 5)
+    {
+        Console.WriteLine("Number input must be from 0 - 5!");
+        //break;
+    }
 
+    else
+    {
+        switch(result)
+        {
+            //Operation quits if user enters 0
+            case 0:
+                Console.WriteLine("You have exited");
+                break;
+
+
+            //Registers Customer
+            case 1:
+                Console.WriteLine("Register Customer");
+                AccountTransactionMethods.RegisterCustomer(customerList, accountList);
+                break;
+
+
+            //Deposit Transactiton
+            case 2:
+                Console.WriteLine("Deposit Transaction");
+                Console.WriteLine("Enter your accountNumber: ");
+                input = Console.ReadLine();
+
+                Console.WriteLine("Enter amount to deposit: ");
+                input = Console.ReadLine();
+                bool inputChecker  = Decimal.TryParse(input, out decimal deciResult);
+                if (inputChecker == true) 
+                {
+                    AccountTransactionMethods.Deposit(input, deciResult, "A deposit transaction", accountList, transactionList);
+                }
+                else
+                {
+                    Console.WriteLine($"Amount entered is invalid.");
+                }
+                break;
+
+
+            //Withdraw Transaction
+            case 3:
+                Console.WriteLine("Withdraw Transaction");
+                Console.WriteLine("Enter your accountNumber: ");
+                input = Console.ReadLine();
+
+                Console.WriteLine("Enter amount to deposit: ");
+                input = Console.ReadLine();
+                bool inputChecker2 = Decimal.TryParse(input, out decimal withResult);
+                if (inputChecker2 == true)
+                {
+                    AccountTransactionMethods.Withdraw(input, withResult, "A withdraw transaction", accountList, transactionList);
+                }
+                else
+                {
+                    Console.WriteLine($"Amount entered is invalid.");
+                }
+                break;
+
+
+            //Transfer Transaction
+           case 4:
+                Console.WriteLine("Transfer Transaction");
+                //Prompting user for sender account
+                Console.WriteLine("Enter sender account number: ");
+                string senderAccount = Console.ReadLine();
+
+                //Prompting user for receiver account
+                Console.WriteLine("Enter receiver account number: ");
+                string receiverAccount = Console.ReadLine();
+
+                Console.WriteLine("Enter amount to deposit: ");
+                input = Console.ReadLine();
+                bool inputChecker3 = Decimal.TryParse(input, out decimal amountToSend);
+
+                if (inputChecker3 == false)
+                {
+                    Console.WriteLine($"Amount entered is invalid.");
+                    break;
+                }
+
+                AccountTransactionMethods.Transfer(senderAccount, receiverAccount, amountToSend, "A transfer transaction",accountList, transactionList);
+                break;
+
+
+            //To Check Account Balance
+            case 5:
+                Console.WriteLine("Balance Enquiry");
+                Console.WriteLine("Transfer Transaction");
+                //Prompting user for sender account
+                Console.WriteLine("Enter sender account number: ");
+                string accountNumber = Console.ReadLine();
+                AccountTransactionMethods.CurrentBalance(accountNumber, accountList);
+                break;
+
+        }
+    }
+
+    //Prompt the User if they want to continue
+    Console.WriteLine("To QUIT press 'NO' ");
+    string stopOperation = Console.ReadLine();
+    //check whileChecker
+    if (stopOperation == "NO")
+    {
+        //change the condition of whileChecker
+        whileChecker = false;
+    }
+}
 
 /*
 string newName = string.Empty;

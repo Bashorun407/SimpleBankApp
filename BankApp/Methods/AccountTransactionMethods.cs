@@ -123,51 +123,63 @@ namespace BankApp.Methods
             Console.WriteLine("Enter account password: ");
             password = Console.ReadLine();
 
+            //use details to create a new account object
+            Account account = new Account(fname, lname, oname, password, accountType);
+
+            //To check if account already exists. If it doesn't, it will be added to the accountList
+            AccountCheckMethods.CheckIfAccountExist(account, accountList);
+
             //Use details to create a new customer
             Customer customer = new Customer(fname, lname, oname, email, phoneNumber);
             //Add new customer to Customer List
             customerList.Add(customer);
 
-            //use details to create a new account object
-            Account account = new Account(fname, lname, oname, password, accountType);
+            //Display account details to user
+            Console.WriteLine($"Account Details: \n Account Name: {account.LastName}, {account.FirstName} {account.OtherName}" +
+                $"\n Account Number: {account.AccountNumber}\n Account Type: {account.AccountType}\n Account Balance: {account.AccountBalance}");
 
-            //To check if account already exists
-            AccountCheckMethods.CheckIfAccountExist(account, accountList);
         }
 
 
         //2) Method to Deposit
-        public static void Deposit(string accountNumber, decimal balance, List<Account> accounts, List<Transaction> transactions)
+        public static void Deposit(string accountNumber, decimal depositAmount, string description, List<Account> accounts, List<Transaction> transactions)
         {
+            bool checker = false;
             //Search for user's account detail in the List
             foreach (Account accountDetail in accounts)
             {
                 //To check if account number exists in the in-memory database
-                if (accountDetail.AccountNumber.Equals(accountNumber))
+                if (accountDetail.AccountNumber == accountNumber)
                 {
 
-                    accountDetail.AccountBalance += balance;
+                    accountDetail.AccountBalance += depositAmount;
                     Console.WriteLine($"New Account Balance for {accountDetail.LastName}, {accountDetail.FirstName} [{accountDetail.AccountNumber}] " +
                         $"is: N{accountDetail.AccountBalance}");
 
                     //Then save the Transaction in the transaction database
+                    Transaction transaction = new Transaction("Debit", depositAmount, accountNumber, description);
+                    transactions.Add(transaction);
 
+                    checker = true;
+                    //break the loop
                     break;
 
                 }
-
-                //If account does not exist in the in-memory database, send an error message
-                else
+                if (checker == true)
                 {
-                    Console.WriteLine("Account detail does not exist");
+                    return;
                 }
             }
+
+            //If account does not exist in the in-memory database, send an error message
+            Console.WriteLine($"Account detail with Account number: {accountNumber} does not exist");
         }
 
 
         //3) Method to Withdraw
-        public static void Withdraw(string accountNumber, decimal withdrawAmount, List<Account> accounts, List<Transaction> transactions)
+        public static void Withdraw(string accountNumber, decimal withdrawAmount, string description, List<Account> accounts, List<Transaction> transactions)
         {
+            bool checker = false;
             //Search for user's account detail in the List
             foreach (Account accountDetail in accounts)
             {
@@ -190,7 +202,10 @@ namespace BankApp.Methods
                                     $"is: N{accountDetail.AccountBalance: 2F}");
 
                             //Then save the Transaction in the transaction database
+                            Transaction transaction = new Transaction("Withdraw", withdrawAmount, accountNumber, description);
+                            transactions.Add(transaction);
 
+                            checker = true;
                             //then break
                             break;
                         }
@@ -198,7 +213,7 @@ namespace BankApp.Methods
                         //if password does not exist, print warning to console
                         else
                         {
-                            Console.WriteLine("This password is not recognized.");
+                            Console.WriteLine($"This password: {password} is not recognized.");
                             break;
                         }
 
@@ -211,27 +226,66 @@ namespace BankApp.Methods
 
                 }
 
-                //if account does not exist in the in-memory
-                else
+                if(checker == true)
                 {
-                    Console.WriteLine($"Account with Account-Number: {accountDetail.AccountNumber} does not exist.");
+                    return;
                 }
-
             }
+
+            //if account does not exist in the in-memory
+
+            Console.WriteLine($"Account with Account-Number: {accountNumber} does not exist.");
         }
 
 
         //4) Method to transfer
-        public static void Transfer(string fromAccount, string toAccount, decimal amount, string comment, List<Account> accounts, List<Transaction> transactions)
+        public static void Transfer(string fromAccount, string toAccount, decimal amount, string description, List<Account> accounts, List<Transaction> transactions)
         {
 
             //Withdraw amount from Sender's account
-            Withdraw(fromAccount, amount, accounts, transactions);
+            Withdraw(fromAccount, amount, description, accounts, transactions);
 
             //Send amount to Receiver's account
-            Deposit(toAccount, amount, accounts, transactions);
+            Deposit(toAccount, amount, description, accounts, transactions);
 
-            Console.WriteLine(comment);
+            Console.WriteLine(description);
+        }
+
+
+        //5) Method to check balance
+        public static void CurrentBalance(string accountNumber, List<Account> accountList)
+        {
+            bool checker = false;
+            //Search for user's account detail in the List
+            foreach (Account accountDetail in accountList)
+            {
+                //if account exists in the in-memory database, add balance
+                if (accountDetail.AccountNumber.Equals(accountNumber))
+                {
+                    //Requests for user's password
+                    Console.WriteLine("Enter Password");
+                    string? password = Console.ReadLine();
+
+                    //if password tallies, continue transaction
+                    if (password.Equals(accountDetail.Password))
+                    {
+                        Console.WriteLine($"Account Details: \n Name: {accountDetail.LastName}, {accountDetail.FirstName}" +
+                            $"\n Account Number: {accountDetail.AccountNumber} \n Account Balance: {accountDetail.AccountBalance}");
+
+                        checker = true;
+                        //break out of the loop
+                        break;
+                    }
+
+                    else
+                    {
+                        Console.WriteLine($"Password is not recognized: {password}");
+                    }
+                }
+                if (checker == true)
+                    return;
+            }
+            Console.WriteLine($"Account Number: {accountNumber} does not exist. ");
         }
     }
 }
