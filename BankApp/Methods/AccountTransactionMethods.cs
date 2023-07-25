@@ -189,9 +189,39 @@ namespace BankApp.Methods
                 //if account exists in the in-memory database, add balance
                 if (accountDetail.AccountNumber.Equals(accountNumber))
                 {
+                    if(accountDetail.AccountType == "Current" && accountDetail.AccountBalance - withdrawAmount > 0)
+                    {
+                        //Requests for user's password
+                        Console.WriteLine("Enter Password");
+                        string? password = Console.ReadLine();
+
+                        //if password tallies, continue transaction
+                        if (password.Equals(accountDetail.Password))
+                        {
+                            accountDetail.AccountBalance -= withdrawAmount;
+                            Console.WriteLine($"New Account Balance for {accountDetail.LastName}, {accountDetail.FirstName} [{accountDetail.AccountNumber}] " +
+                                    $"is: N{accountDetail.AccountBalance}");
+
+                            //Then save the Transaction in the transaction database
+                            Transaction transaction = new Transaction("Withdraw", withdrawAmount, accountNumber, description);
+                            transactions.Add(transaction);
+
+                            checker = true;
+                            //then break
+                            break;
+                        }
+
+                        //if password does not exist, print warning to console
+                        else
+                        {
+                            Console.WriteLine($"This password: {password} is not recognized.");
+                            break;
+                        }
+
+                    }
 
                     //Check if Accountbalance is greater than withdrawAccount and balace left will be at least 500
-                    if (accountDetail.AccountBalance - withdrawAmount > 1000)
+                    else if (accountDetail.AccountType == "Savings" && accountDetail.AccountBalance - withdrawAmount > 1000)
                     {
                         //Requests for user's password
                         Console.WriteLine("Enter Password");
@@ -294,6 +324,17 @@ namespace BankApp.Methods
                 }
             }
 
+        }
+
+        //6)Method to list all accounts in the Database
+        public static void DisplayAllAccount(List<Account> accounts)
+        {
+            Console.WriteLine("First Name\t\t| Last Name\t\t|Other Name\t\t|Account Type\t\t|Account Number\t\t|Account Balance \t\t|");
+            foreach (Account account in accounts)
+            {
+
+                Console.WriteLine($"{account.FirstName}\t\t|{account.LastName}\t\t|{account.OtherName}\t\t|{account.AccountType}\t\t|{account.AccountNumber}\t\t|{account.AccountBalance}\t\t|");
+            }
         }
     }
 }

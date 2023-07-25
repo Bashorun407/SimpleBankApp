@@ -16,7 +16,7 @@ while (whileChecker)
 {
     //Print options to console
     Console.WriteLine("\n####********** Welcome Customer ***********####\n\n To Register press: 1 \n To Deposit press: 2 \n To Withdraw press: 3 \n To Transfer press: 4" +
-        "\n To Check Balance press: 5 \n To Quit Press: 0");
+        "\n To Check Balance press: 5 \n To Display all accounts press: 6 \n To Quit Press: 0");
     //Accept user input
     input = Console.ReadLine();
 
@@ -33,7 +33,7 @@ while (whileChecker)
 
 
     //To check that the user inputs digit between 1 and 7
-    else if (result < 0 || result > 5)
+    else if (result < 0 || result > 6)
     {
         Console.WriteLine("Number input must be from 0 - 5!");
         //break;
@@ -128,6 +128,11 @@ while (whileChecker)
                 Console.WriteLine("Enter your account number: ");
                 string accountNumber = Console.ReadLine();
                 AccountTransactionMethods.CurrentBalance(accountNumber, accountList);
+                break;
+
+            case 6:
+                Console.WriteLine("All Accounts");
+                AccountTransactionMethods.DisplayAllAccount(accountList);
                 break;
 
         }
