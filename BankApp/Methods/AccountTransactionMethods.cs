@@ -333,7 +333,7 @@ namespace BankApp.Methods
         //6)Method to list all accounts in the Database
         public static void DisplayAllAccount(List<Account> accounts)
         {
-            Console.WriteLine("First Name\t| Last Name\t|Other Name\t|Account Type\t|Account Number\t|Account Balance \t|");
+            Console.WriteLine("First Name\t| Last Name\t|Other Name\t|Account Type\t\t|Account Number\t\t|Account Balance |");
             foreach (Account account in accounts)
             {
 
