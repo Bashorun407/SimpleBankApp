@@ -16,7 +16,15 @@ namespace BankApp.Methods
             bool find = false;
             foreach (Account account in accounts)
             {
+               //Reconstruct this if conditional statement
                 //if account type exists, break
+                if(newAccount.FirstName == account.FirstName && newAccount.LastName == account.LastName 
+                    && newAccount.OtherName == account.OtherName && newAccount.AccountType == account.AccountType)
+                {
+                    find = true;
+                    break;
+                }
+                /*
                 if (account.FirstName.Equals(newAccount.FirstName, StringComparison.InvariantCultureIgnoreCase)
                     && account.LastName.Equals(newAccount.LastName, StringComparison.InvariantCultureIgnoreCase)
                     && account.OtherName.Equals(newAccount.AccountNumber, StringComparison.InvariantCultureIgnoreCase)
@@ -24,7 +32,7 @@ namespace BankApp.Methods
                 {
                     find = true;
                     break;
-                }
+                }*/
             }
 
             if (find == true)

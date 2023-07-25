@@ -127,17 +127,21 @@ namespace BankApp.Methods
             Account account = new Account(fname, lname, oname, password, accountType);
 
             //To check if account already exists. If it doesn't, it will be added to the accountList
-            AccountCheckMethods.CheckIfAccountExist(account, accountList);
+            bool checkAcct = AccountCheckMethods.CheckIfAccountExist(account, accountList);
 
             //Use details to create a new customer
             Customer customer = new Customer(fname, lname, oname, email, phoneNumber);
             //Add new customer to Customer List
             customerList.Add(customer);
 
-            //Display account details to user
-            Console.WriteLine($"Account Details: \n Account Name: {account.LastName}, {account.FirstName} {account.OtherName}" +
-                $"\n Account Number: {account.AccountNumber}\n Account Type: {account.AccountType}\n Account Balance: {account.AccountBalance}");
-
+            //if account has been created, display account details
+            if(checkAcct == true)
+            {
+                //Display account details to user
+                Console.WriteLine($"Account Details: \n Account Name: {account.LastName}, {account.FirstName} {account.OtherName}" +
+                    $"\n Account Number: {account.AccountNumber}\n Account Type: {account.AccountType}\n Account Balance: {account.AccountBalance}");
+            }
+            
         }
 
 
@@ -329,7 +333,7 @@ namespace BankApp.Methods
         //6)Method to list all accounts in the Database
         public static void DisplayAllAccount(List<Account> accounts)
         {
-            Console.WriteLine("First Name\t\t| Last Name\t\t|Other Name\t\t|Account Type\t\t|Account Number\t\t|Account Balance \t\t|");
+            Console.WriteLine("First Name\t| Last Name\t|Other Name\t|Account Type\t|Account Number\t|Account Balance \t|");
             foreach (Account account in accounts)
             {
 
