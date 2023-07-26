@@ -336,8 +336,7 @@ namespace BankApp.Methods
             Console.WriteLine("First Name\t| Last Name\t|Other Name\t|Account Type\t\t|Account Number\t\t|Account Balance |");
             foreach (Account account in accounts)
             {
-
-                Console.WriteLine($"{account.FirstName}\t\t|{account.LastName}\t\t|{account.OtherName}\t\t|{account.AccountType}\t\t|{account.AccountNumber}\t\t|{account.AccountBalance}\t\t|");
+                Console.WriteLine($"{account.FirstName}\t\t|{account.LastName}\t\t|{account.OtherName}\t\t|{account.AccountType}\t\t|{account.AccountNumber}\t\t\t|{account.AccountBalance}\t\t|");
             }
         }
     }
